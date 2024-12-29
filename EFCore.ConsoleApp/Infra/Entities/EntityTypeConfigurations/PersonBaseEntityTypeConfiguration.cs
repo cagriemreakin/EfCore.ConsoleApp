@@ -1,0 +1,25 @@
+using EFCore.Demo.Infra.Entities.Base;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace EFCore.Demo.Infra.Entities.EntityTypeConfigurations;
+
+public class PersonBaseEntityTypeConfiguration<TEntity> : BaseEntityTypeConfiguration<TEntity>
+    where TEntity : PersonBaseEntity
+{
+    public override void Configure(EntityTypeBuilder<TEntity> builder)
+    {
+        builder.Property(e => e.FirstName)
+            .IsRequired()
+            .HasMaxLength(100);
+
+        //
+        // .IsUnique()
+        // .HasDatabaseName("idx_first_name");
+        //
+        builder.Property(e => e.LastName)
+            .IsRequired()
+            .HasMaxLength(100);
+        base.Configure(builder);
+    }
+}
